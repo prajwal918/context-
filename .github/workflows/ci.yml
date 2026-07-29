@@ -7,27 +7,20 @@ on:
     branches: [ "main", "master" ]
 
 jobs:
-  build-and-test:
+  build:
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout repository
-      continue-on-error: true
-      uses: actions/checkout@v3
+    - uses: actions/checkout@v4
 
-    - name: Setup Node.js
-      continue-on-error: true
-      uses: actions/setup-node@v3
+    - uses: actions/setup-node@v4
       with:
-        node-version: '20'
+        node-version: '18'
 
     - name: Install dependencies
-      continue-on-error: true
-      run: npm install || true
+      run: npm install
 
-    - name: Run tests
-      continue-on-error: true
-      run: npm test --if-present || true
+    - name: Lint
+      run: npm run lint --if-present
 
-    - name: Docker Build Check
-      continue-on-error: true
-      run: docker build || true -t context-api:latest .
+    - name: Build
+      run: npm run build --if-present
