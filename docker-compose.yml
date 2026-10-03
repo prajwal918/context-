@@ -7,3 +7,12 @@ services:
     environment:
       - NODE_ENV=production
     restart: always
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 512M
